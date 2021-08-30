@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Xamarin.Essentials;
 
 // Install-Package Fody
 // Install-Package PropertyChanged.Fody

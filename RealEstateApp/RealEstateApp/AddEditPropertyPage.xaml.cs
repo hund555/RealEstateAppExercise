@@ -5,12 +5,16 @@ using System.Linq;
 using TinyIoC;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using Xamarin.Essentials;
+using System;
+using System.Threading;
 
 namespace RealEstateApp
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class AddEditPropertyPage : ContentPage
     {
+        CancellationTokenSource cts;
         private IRepository Repository;
 
         #region PROPERTIES
@@ -100,6 +104,41 @@ namespace RealEstateApp
         private async void CancelSave_Clicked(object sender, System.EventArgs e)
         {
             await Navigation.PopToRootAsync();
+        }
+
+        private async void GetLocationButton_Clicked(object sender, System.EventArgs e)
+        {
+            try
+            {
+                var request = new GeolocationRequest(GeolocationAccuracy.Default, TimeSpan.FromSeconds(10));
+                cts = new CancellationTokenSource();
+                var location = await Geolocation.GetLocationAsync(request, cts.Token);
+                _property.Latitude = location.Latitude;
+                _property.Longitude = location.Longitude;
+            }
+            catch (FeatureNotSupportedException fnsEx)
+            {
+                // Handle not supported on device exception
+            }
+            catch (FeatureNotEnabledException fneEx)
+            {
+                // Handle not enabled on device exception
+            }
+            catch (PermissionException pEx)
+            {
+                // Handle permission exception
+            }
+            catch (Exception ex)
+            {
+                // Handle not supported on device exception
+            }
+            
+        }
+        protected override void OnDisappearing()
+        {
+            if (cts != null && !cts.IsCancellationRequested)
+                cts.Cancel();
+            base.OnDisappearing();
         }
     }
 }

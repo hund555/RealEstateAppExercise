@@ -35,6 +35,13 @@
                     </Label>
                     <Entry FontSize="Medium" Text="{Binding Property.Address}" />
 
+                    <Label Text="Location"/>
+                    <Grid ColumnDefinitions="*, *, *">
+                        <Label Grid.Column="0" Text="{Binding Property.Latitude}" />
+                        <Label Grid.Column="1" Text="{Binding Property.Longitude}" />
+                        <Button x:Name="GetLocationButton" Text="{Static fa:IconFont.MapPin}" FontSize="Large" FontFamily="FA-solid" Clicked="GetLocationButton_Clicked" Grid.Column="2"/>
+                    </Grid>
+
                     <Label FontSize="Medium" FontFamily="FA-solid">
                         <Label.FormattedText>
                             <FormattedString>
