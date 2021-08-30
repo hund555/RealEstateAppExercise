@@ -28,7 +28,8 @@
                             <FormattedString>
                                 <Span Text="{Static fa:IconFont.Home}"/>
                                 <Span Text=" " />
-                                <Span Text="Address*" />
+                                <Span Text="Address" />
+                                <Span Text="*" TextColor="Red"/>
                             </FormattedString>
                         </Label.FormattedText>
                     </Label>
@@ -51,7 +52,8 @@
                             <FormattedString>
                                 <Span Text="{Static fa:IconFont.Bed}"/>
                                 <Span Text=" " />
-                                <Span Text="Bedrooms*" />
+                                <Span Text="Bedrooms" />
+                                <Span Text="*" TextColor="Red"/>
                             </FormattedString>
                         </Label.FormattedText>
                     </Label>
@@ -128,7 +130,8 @@
                             <FormattedString>
                                 <Span Text="{Static fa:IconFont.UserTie}"/>
                                 <Span Text=" " />
-                                <Span Text="Agent*" />
+                                <Span Text="Agent" />
+                                <Span Text="*" TextColor="Red"/>
                             </FormattedString>
                         </Label.FormattedText>
                     </Label>
