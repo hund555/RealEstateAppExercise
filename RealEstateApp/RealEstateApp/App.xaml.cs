@@ -29,7 +29,7 @@ namespace RealEstateApp
             // Handle when your app starts
         }
 
-        protected override void OnSleep()
+        protected async override void OnSleep()
         {
             #region 3.5
             try
@@ -50,6 +50,8 @@ namespace RealEstateApp
                 return;
 
             Cts.Cancel();
+
+            await Flashlight.TurnOffAsync();
             #endregion
         }
 

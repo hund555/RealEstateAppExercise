@@ -175,7 +175,7 @@ namespace RealEstateApp
 
         }
 
-        protected override void OnDisappearing()
+        protected async override void OnDisappearing()
         {
             #region 3.5
             try
@@ -196,6 +196,8 @@ namespace RealEstateApp
             {
                 cts.Cancel();
             }
+
+            await Flashlight.TurnOffAsync();
 
             base.OnDisappearing();
         }
