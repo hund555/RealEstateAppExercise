@@ -36,10 +36,11 @@
                     <Entry FontSize="Medium" Text="{Binding Property.Address}" />
 
                     <Label Text="Location"/>
-                    <Grid ColumnDefinitions="*, *, *">
+                    <Grid ColumnDefinitions="*, *, *, *">
                         <Label Grid.Column="0" Text="{Binding Property.Latitude}" />
                         <Label Grid.Column="1" Text="{Binding Property.Longitude}" />
-                        <Button x:Name="GetLocationButton" Text="{Static fa:IconFont.MapPin}" FontSize="Large" FontFamily="FA-solid" Clicked="GetLocationButton_Clicked" Grid.Column="2"/>
+                        <Button x:Name="GetLocationButton" Text="{Static fa:IconFont.Thumbtack}" FontFamily="FA-solid" Clicked="GetLocationButton_Clicked" Grid.Column="2"/>
+                        <Button x:Name="GetAddressLocationButton" Text="{Static fa:IconFont.Home}" FontFamily="FA-solid" Clicked="GetAddressLocationButton_Clicked" Grid.Column="3"/>
                     </Grid>
 
                     <Label FontSize="Medium" FontFamily="FA-solid">

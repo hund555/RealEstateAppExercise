@@ -118,6 +118,15 @@ namespace RealEstateApp
                 {
                     _property.Latitude = location.Latitude;
                     _property.Longitude = location.Longitude;
+
+                    #region 3.3
+                    var placemark = await Geocoding.GetPlacemarksAsync(location);
+                    if (placemark != null)
+                    {
+                        var address = placemark.FirstOrDefault();
+                        _property.Address = $"{address.SubThoroughfare} {address.Thoroughfare}, {address.Locality} {address.PostalCode} {address.CountryName}";
+                    }
+                    #endregion
                 }
             }
             catch (FeatureNotSupportedException fnsEx)
@@ -143,6 +152,38 @@ namespace RealEstateApp
             if (cts != null && !cts.IsCancellationRequested)
                 cts.Cancel();
             base.OnDisappearing();
+        }
+        #endregion
+
+        #region 3.3
+        private async void GetAddressLocationButton_Clicked(object sender, EventArgs e)
+        {
+            if (_property.Address == null)
+            {
+                await DisplayAlert("Alert", "Du skal indtaste en adresse", "Ok");
+            }
+            else
+            {
+                try
+                {
+                    var location = await Geocoding.GetLocationsAsync(_property.Address);
+                    if (location != null)
+                    {
+                        var cords = location.FirstOrDefault();
+                        _property.Latitude = cords.Latitude;
+                        _property.Longitude = cords.Longitude;
+                    }
+                }
+                catch (FeatureNotSupportedException)
+                {
+
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
+            }
         }
         #endregion
     }
