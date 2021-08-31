@@ -1,6 +1,7 @@
 ﻿using RealEstateApp.Services;
 using RealEstateApp.Services.Repository;
 using System;
+using System.Threading;
 using TinyIoC;
 using Xamarin.Essentials;
 using Xamarin.Forms;
@@ -19,6 +20,9 @@ namespace RealEstateApp
             MainPage = new AppShell();
         }
 
+        #region 3.6
+        public static CancellationTokenSource Cts { get; set; }
+        #endregion
 
         protected override void OnStart()
         {
@@ -40,6 +44,12 @@ namespace RealEstateApp
             {
                 // Other error has occurred.
             }
+            #endregion
+            #region 3.6
+            if (Cts?.IsCancellationRequested ?? true)
+                return;
+
+            Cts.Cancel();
             #endregion
         }
 
