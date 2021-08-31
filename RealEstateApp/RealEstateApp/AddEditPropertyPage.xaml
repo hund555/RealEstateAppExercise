@@ -10,12 +10,14 @@
              Title="{Binding Title}">
 
     <ContentPage.ToolbarItems>
+        <ToolbarItem Clicked="Flashlight_Clicked" Text="Flashlight"/>
         <ToolbarItem Clicked="CancelSave_Clicked" Text="Cancel" />
         <ToolbarItem Clicked="SaveProperty_Clicked" Text="Save" />
     </ContentPage.ToolbarItems>
 
     <ContentPage.Content>
         <StackLayout BackgroundColor="#E8E8E8">
+            <Label BackgroundColor="{Binding BatteryMessageColor}" Text="{Binding BatteryMessage}" IsVisible="{Binding LowBatteryPower, Converter={converters:StringBoolConverter}}"/>
             <Label
                 BackgroundColor="{Binding StatusColor}"
                 IsVisible="{Binding StatusMessage, Converter={converters:StringBoolConverter}}"

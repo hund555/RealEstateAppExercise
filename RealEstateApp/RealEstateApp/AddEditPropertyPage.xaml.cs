@@ -31,10 +31,10 @@ namespace RealEstateApp
                 {
                     SelectedAgent = Agents.FirstOrDefault(x => x.Id == _property?.AgentId);
                 }
-               
+
             }
         }
-    
+
         private Agent _selectedAgent;
 
         public Agent SelectedAgent
@@ -46,7 +46,7 @@ namespace RealEstateApp
                 {
                     _selectedAgent = value;
                     Property.AgentId = _selectedAgent?.Id;
-                }                 
+                }
             }
         }
 
@@ -72,7 +72,7 @@ namespace RealEstateApp
                 Title = "Edit Property";
                 Property = property;
             }
-         
+
             BindingContext = this;
         }
 
@@ -172,7 +172,7 @@ namespace RealEstateApp
             {
                 // Handle not supported on device exception
             }
-            
+
         }
 
         protected override void OnDisappearing()
@@ -233,9 +233,33 @@ namespace RealEstateApp
         }
         #endregion
 
+        public Color BatteryMessageColor { get; set; }
+        public string BatteryMessage { get; set; }
+
         #region 3.4
         protected override void OnAppearing()
         {
+            #region 3.7
+            var level = Battery.ChargeLevel; // returns 0.0 to 1.0 or 1.0 when on AC or no battery.
+
+            var state = Battery.State;
+
+            if (level <= 0.2)
+            {
+                BatteryMessage = "Dit batteri er ved at være fladt";
+                BatteryMessageColor = Color.Red;
+                if (state == BatteryState.Charging)
+                {
+                    BatteryMessageColor = Color.Yellow;
+                }
+                if (Battery.EnergySaverStatus == EnergySaverStatus.On)
+                {
+                    BatteryMessageColor = Color.Green;
+                }
+            }
+
+            #endregion
+
             var current = Connectivity.NetworkAccess;
             if (current == NetworkAccess.Internet)
             {
@@ -248,6 +272,40 @@ namespace RealEstateApp
                 DisplayAlert("Internet connextion", "Du har ingen internet", "Ok");
             }
             base.OnAppearing();
+        }
+
+        #endregion
+
+        #region 3.7
+
+        public bool ToggleFlashlight { get; set; } = false;
+        private async void Flashlight_Clicked(object sender, EventArgs e)
+        {
+            try
+            {
+                if (ToggleFlashlight)
+                {
+                    await Flashlight.TurnOffAsync();
+                    ToggleFlashlight = false;
+                }
+                else
+                {
+                    await Flashlight.TurnOnAsync();
+                    ToggleFlashlight = true;
+                }
+            }
+            catch (FeatureNotSupportedException)
+            {
+                // Handle not supported on device exception
+            }
+            catch (PermissionException)
+            {
+                // Handle permission exception
+            }
+            catch (Exception)
+            {
+                // Unable to turn on/off flashlight
+            }
         }
         #endregion
     }
