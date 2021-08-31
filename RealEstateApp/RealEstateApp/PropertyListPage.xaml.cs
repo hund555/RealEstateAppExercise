@@ -2,7 +2,9 @@
 using RealEstateApp.Services;
 using System;
 using System.Collections.ObjectModel;
+using System.Linq;
 using TinyIoC;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -11,8 +13,9 @@ namespace RealEstateApp
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class PropertyListPage : ContentPage
     {
+        public Location MyLocation { get; set; }
         IRepository Repository;
-        public ObservableCollection<PropertyListItem> PropertiesCollection { get; } = new ObservableCollection<PropertyListItem>(); 
+        public ObservableCollection<PropertyListItem> PropertiesCollection { get; set; } = new ObservableCollection<PropertyListItem>();
 
         public PropertyListPage()
         {
@@ -20,7 +23,7 @@ namespace RealEstateApp
 
             Repository = TinyIoCContainer.Current.Resolve<IRepository>();
             LoadProperties();
-            BindingContext = this; 
+            BindingContext = this;
         }
 
         protected override void OnAppearing()
@@ -41,11 +44,27 @@ namespace RealEstateApp
         {
             PropertiesCollection.Clear();
             var items = Repository.GetProperties();
-
+            
             foreach (Property item in items)
             {
-                PropertiesCollection.Add(new PropertyListItem(item));
+                PropertyListItem p = new PropertyListItem(item);
+                try
+                {
+                    p.Distance = Location.CalculateDistance((double)p.Property.Latitude, (double)p.Property.Longitude, MyLocation, DistanceUnits.Kilometers);
+                }
+                catch (Exception)
+                {
+                }
+                PropertiesCollection.Add(p);
             }
+            #region 3.2
+            var newlist = new ObservableCollection<PropertyListItem>();
+            foreach (var item in PropertiesCollection.OrderBy(d => d.Distance))
+            {
+                newlist.Add(item);
+            }
+            PropertiesCollection = newlist;
+            #endregion
         }
 
         private async void ItemsListView_ItemTapped(object sender, ItemTappedEventArgs e)
@@ -56,6 +75,40 @@ namespace RealEstateApp
         private async void AddProperty_Clicked(object sender, EventArgs e)
         {
             await Navigation.PushAsync(new AddEditPropertyPage());
-        }    
+        }
+
+        #region 3.2
+        private async void SortAsync(object sender, EventArgs e)
+        {
+            try
+            {
+                MyLocation = await Geolocation.GetLastKnownLocationAsync();
+
+                if (MyLocation == null)
+                {
+                    var request = new GeolocationRequest(GeolocationAccuracy.Medium, TimeSpan.FromSeconds(10));
+                    MyLocation = await Geolocation.GetLocationAsync(request);
+                }
+            }
+            catch (FeatureNotSupportedException fnsEx)
+            {
+                // Handle not supported on device exception
+            }
+            catch (FeatureNotEnabledException fneEx)
+            {
+                // Handle not enabled on device exception
+            }
+            catch (PermissionException pEx)
+            {
+                // Handle permission exception
+            }
+            catch (Exception ex)
+            {
+                // Unable to get location
+            }
+            LoadProperties();
+            
+        }
+        #endregion
     }
 }

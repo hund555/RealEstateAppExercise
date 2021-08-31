@@ -23,6 +23,8 @@ namespace RealEstateApp.Models
             }
         }
 
+        public double Distance { get; set; }
+
 
         public event PropertyChangedEventHandler PropertyChanged;
 

@@ -105,16 +105,20 @@ namespace RealEstateApp
         {
             await Navigation.PopToRootAsync();
         }
-
+        #region 3.1
         private async void GetLocationButton_Clicked(object sender, System.EventArgs e)
         {
             try
             {
-                var request = new GeolocationRequest(GeolocationAccuracy.Default, TimeSpan.FromSeconds(10));
+                var request = new GeolocationRequest(GeolocationAccuracy.Best, TimeSpan.FromSeconds(10));
                 cts = new CancellationTokenSource();
                 var location = await Geolocation.GetLocationAsync(request, cts.Token);
-                _property.Latitude = location.Latitude;
-                _property.Longitude = location.Longitude;
+
+                if (location != null)
+                {
+                    _property.Latitude = location.Latitude;
+                    _property.Longitude = location.Longitude;
+                }
             }
             catch (FeatureNotSupportedException fnsEx)
             {
@@ -140,5 +144,6 @@ namespace RealEstateApp
                 cts.Cancel();
             base.OnDisappearing();
         }
+        #endregion
     }
 }
