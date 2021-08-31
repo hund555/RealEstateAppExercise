@@ -15,3 +15,5 @@ using Xamarin.Forms.Xaml;
 [assembly: UsesPermission(Manifest.Permission.AccessBackgroundLocation)]
 
 [assembly: UsesPermission(Android.Manifest.Permission.AccessNetworkState)]
+
+[assembly: UsesPermission(Android.Manifest.Permission.Vibrate)]

@@ -82,12 +82,25 @@ namespace RealEstateApp
             {
                 StatusMessage = "Please fill in all required fields";
                 StatusColor = Color.Red;
+                try
+                {
+                    TimeSpan duration = TimeSpan.FromSeconds(5);
+                    Vibration.Vibrate(duration);
+                }
+                catch (FeatureNotSupportedException)
+                {
+                    // Feature not supported on device
+                }
+                catch (Exception)
+                {
+                    // Other error has occurred.
+                }
             }
             else
             {
                 Repository.SaveProperty(Property);
                 await Navigation.PopToRootAsync();
-            }   
+            }
         }
 
         public bool IsValid()
@@ -103,6 +116,20 @@ namespace RealEstateApp
 
         private async void CancelSave_Clicked(object sender, System.EventArgs e)
         {
+            #region 3.5
+            try
+            {
+                Vibration.Cancel();
+            }
+            catch (FeatureNotSupportedException)
+            {
+                // Feature not supported on device
+            }
+            catch (Exception)
+            {
+                // Other error has occurred.
+            }
+            #endregion
             await Navigation.PopToRootAsync();
         }
         #region 3.1
@@ -129,28 +156,47 @@ namespace RealEstateApp
                     #endregion
                 }
             }
-            catch (FeatureNotSupportedException fnsEx)
+            catch (FeatureNotSupportedException)
             {
                 // Handle not supported on device exception
             }
-            catch (FeatureNotEnabledException fneEx)
+            catch (FeatureNotEnabledException)
             {
                 // Handle not enabled on device exception
             }
-            catch (PermissionException pEx)
+            catch (PermissionException)
             {
                 // Handle permission exception
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 // Handle not supported on device exception
             }
             
         }
+
         protected override void OnDisappearing()
         {
+            #region 3.5
+            try
+            {
+                Vibration.Cancel();
+            }
+            catch (FeatureNotSupportedException)
+            {
+                // Feature not supported on device
+            }
+            catch (Exception)
+            {
+                // Other error has occurred.
+            }
+            #endregion
+
             if (cts != null && !cts.IsCancellationRequested)
+            {
                 cts.Cancel();
+            }
+
             base.OnDisappearing();
         }
         #endregion

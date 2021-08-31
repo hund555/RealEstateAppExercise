@@ -1,6 +1,8 @@
 ﻿using RealEstateApp.Services;
 using RealEstateApp.Services.Repository;
+using System;
 using TinyIoC;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace RealEstateApp
@@ -25,7 +27,20 @@ namespace RealEstateApp
 
         protected override void OnSleep()
         {
-            // Handle when your app sleeps
+            #region 3.5
+            try
+            {
+                Vibration.Cancel();
+            }
+            catch (FeatureNotSupportedException)
+            {
+                // Feature not supported on device
+            }
+            catch (Exception)
+            {
+                // Other error has occurred.
+            }
+            #endregion
         }
 
         protected override void OnResume()
