@@ -186,5 +186,23 @@ namespace RealEstateApp
             }
         }
         #endregion
+
+        #region 3.4
+        protected override void OnAppearing()
+        {
+            var current = Connectivity.NetworkAccess;
+            if (current == NetworkAccess.Internet)
+            {
+
+            }
+            else
+            {
+                GetAddressLocationButton.IsVisible = false;
+                GetLocationButton.IsVisible = false;
+                DisplayAlert("Internet connextion", "Du har ingen internet", "Ok");
+            }
+            base.OnAppearing();
+        }
+        #endregion
     }
 }

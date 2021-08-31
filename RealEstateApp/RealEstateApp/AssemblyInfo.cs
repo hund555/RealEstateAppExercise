@@ -13,3 +13,5 @@ using Xamarin.Forms.Xaml;
 [assembly: UsesFeature("android.hardware.location.gps", Required = false)]
 [assembly: UsesFeature("android.hardware.location.network", Required = false)]
 [assembly: UsesPermission(Manifest.Permission.AccessBackgroundLocation)]
+
+[assembly: UsesPermission(Android.Manifest.Permission.AccessNetworkState)]
