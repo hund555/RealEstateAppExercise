@@ -45,6 +45,12 @@
                         <Button x:Name="GetAddressLocationButton" Text="{Static fa:IconFont.Home}" FontFamily="FA-solid" Clicked="GetAddressLocationButton_Clicked" Grid.Column="3"/>
                     </Grid>
 
+                    <Label Text="Aspect"/>
+                    <Grid ColumnDefinitions="*, auto">
+                        <Entry FontSize="Medium" Text="{Binding Property.Aspect}" />
+                        <Button x:Name="OpenCompass" Text="{Static fa:IconFont.DraftingCompass}" FontFamily="FA-solid" Clicked="OpenCompass_Clicked" Grid.Column="1"/>
+                    </Grid>
+
                     <Label FontSize="Medium" FontFamily="FA-solid">
                         <Label.FormattedText>
                             <FormattedString>

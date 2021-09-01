@@ -310,5 +310,10 @@ namespace RealEstateApp
             }
         }
         #endregion
+
+        private async void OpenCompass_Clicked(object sender, EventArgs e)
+        {
+            await Navigation.PushModalAsync(new CompassPage(_property));
+        }
     }
 }
