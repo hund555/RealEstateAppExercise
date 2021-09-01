@@ -7,5 +7,6 @@
     <FlyoutItem FlyoutDisplayOptions="AsMultipleItems">
         <ShellContent Title="About" Icon="home.png" ContentTemplate="{DataTemplate views:AboutPage}" Shell.TabBarIsVisible="False" />
         <ShellContent Title="Properties" Icon="home.png" ContentTemplate="{DataTemplate views:PropertyListPage}" Shell.TabBarIsVisible="false" />
+        <ShellContent Title="Height Calculator" Icon="" ContentTemplate="{DataTemplate views:HeightCalculatorPage}" Shell.TabBarIsVisible="False"/>
     </FlyoutItem>
 </Shell>
