@@ -79,5 +79,10 @@ namespace RealEstateApp
             CancelSpeech();
         }
         #endregion
+
+        private async void TapGestureRecognizer_Tapped(object sender, System.EventArgs e)
+        {
+            await Navigation.PushAsync(new ImageListPage(Property));
+        }
     }
 }
