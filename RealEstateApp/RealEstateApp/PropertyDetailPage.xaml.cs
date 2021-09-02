@@ -156,5 +156,23 @@ namespace RealEstateApp
             }
         }
         #endregion
+
+        private async void OpenMaps_Clicked(object sender, EventArgs e)
+        {
+            var location = new Location((double)Property.Latitude, (double)Property.Longitude);
+            
+            await Map.OpenAsync(location);
+        }
+
+        private async void Directions_Clicked(object sender, EventArgs e)
+        {
+            var location = new Location((double)Property.Latitude, (double)Property.Longitude);
+            var options = new MapLaunchOptions
+            {
+                Name = Property.Address,
+                NavigationMode = NavigationMode.Driving
+            };
+            await Map.OpenAsync(location, options);
+        }
     }
 }

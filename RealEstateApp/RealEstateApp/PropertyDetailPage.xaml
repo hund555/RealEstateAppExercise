@@ -165,6 +165,21 @@
                         Text="{Binding Agent.Phone}" />
                 </Grid>
             </Grid>
+            <Grid Grid.Row="11" ColumnDefinitions="*, *">
+                <Button 
+                    Text="{Static fa:IconFont.MapMarkedAlt}" 
+                    Margin="0,0,0,20" 
+                    FontSize="14" 
+                    FontFamily="FA-solid"
+                    Clicked="OpenMaps_Clicked"/>
+                <Button
+                    Grid.Column="1"
+                    Text="{Static fa:IconFont.Directions}"
+                    Margin="0,0,0,20" 
+                    FontSize="14" 
+                    FontFamily="FA-solid"
+                    Clicked="Directions_Clicked"/>
+            </Grid>
         </Grid>
     </ScrollView>
 </ContentPage>
