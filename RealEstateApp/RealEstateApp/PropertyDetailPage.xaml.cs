@@ -157,6 +157,7 @@ namespace RealEstateApp
         }
         #endregion
 
+        #region 5.2
         private async void OpenMaps_Clicked(object sender, EventArgs e)
         {
             var location = new Location((double)Property.Latitude, (double)Property.Longitude);
@@ -174,5 +175,6 @@ namespace RealEstateApp
             };
             await Map.OpenAsync(location, options);
         }
+        #endregion
     }
 }
