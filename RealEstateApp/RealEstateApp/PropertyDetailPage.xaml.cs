@@ -1,5 +1,8 @@
 ﻿using RealEstateApp.Models;
 using RealEstateApp.Services;
+using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -80,9 +83,78 @@ namespace RealEstateApp
         }
         #endregion
 
+        #region 4.3
         private async void TapGestureRecognizer_Tapped(object sender, System.EventArgs e)
         {
             await Navigation.PushAsync(new ImageListPage(Property));
         }
+        #endregion
+
+        #region 5.1
+        private async void PhoneNumber_Tapped(object sender, System.EventArgs e)
+        {
+            string choise = await DisplayActionSheet(Property.Vendor.Phone, "Cancel", null, "Call", "sms");
+            try
+            {
+                switch (choise)
+                {
+                    case "Call":
+                        PhoneDialer.Open(Property.Vendor.Phone);
+                        break;
+                    case "sms":
+                        var message = new SmsMessage
+                        {
+                            Recipients = new List<string> { Property.Vendor.Phone },
+                            Body = $"Hej, {Property.Vendor.FirstName}, angående {Property.Address}"
+                        };
+                        await Sms.ComposeAsync(message);
+                        break;
+                    default:
+                        break;
+                }
+            }
+            catch (ArgumentNullException)
+            {
+                // Number was null or white space
+            }
+            catch (FeatureNotSupportedException)
+            {
+                // Phone Dialer is not supported on this device.
+            }
+            catch (Exception)
+            {
+                // Other error has occurred.
+            }
+        }
+
+        private async void Email_Tapped(object sender, EventArgs e)
+        {
+            try
+            {
+                var folder = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+                var attachmentFilePath = Path.Combine(folder, "property.txt");
+                File.WriteAllText(attachmentFilePath, $"{Property.Address}");
+                var message = new EmailMessage
+                {
+                    Subject = Property.Address,
+                    To = new List<string> { Property.Vendor.Email }
+                };
+                message.Attachments.Add(new EmailAttachment(attachmentFilePath));
+                await Email.ComposeAsync(message);
+            }
+            catch (ArgumentNullException)
+            {
+                // Number was null or white space
+            }
+            catch (FeatureNotSupportedException)
+            {
+                // Phone Dialer is not supported on this device.
+            }
+            catch (Exception)
+            {
+                // Other error has occurred.
+            }
+        }
+        #endregion
     }
 }

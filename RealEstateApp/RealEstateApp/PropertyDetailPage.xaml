@@ -112,13 +112,33 @@
                 <Label Grid.Row="4" Text="{Binding PitchInput, StringFormat='Pitch: {0:F2}'}" Margin="0,0,0,20" FontSize="14" />
                 <Slider Grid.Row="5" Grid.ColumnSpan="2" Value="{Binding PitchInput}" Maximum="2"/>
             </Grid>
-            
+
             <Label
                 Grid.Row="7"
                 FontAttributes="Bold"
                 FontSize="14"
-                Text="Listed by:" />
+                Text="Vendor:" />
+            
             <Grid Grid.Row="8">
+                <Label Text="{Binding Property.Vendor.FullName}"/>
+                <Label Grid.Row="1" Text="{Binding Property.Vendor.Email}" TextColor="Blue">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="Email_Tapped"/>
+                    </Label.GestureRecognizers>
+                </Label>
+                <Label Grid.Row="2" Text="{Binding Property.Vendor.Phone}" TextColor="blue">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="PhoneNumber_Tapped"/>
+                    </Label.GestureRecognizers>
+                </Label>
+            </Grid>
+
+            <Label
+                Grid.Row="9"
+                FontAttributes="Bold"
+                FontSize="14"
+                Text="Listed by:" />
+            <Grid Grid.Row="10">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="*" />
