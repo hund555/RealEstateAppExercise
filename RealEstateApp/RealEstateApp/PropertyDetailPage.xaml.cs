@@ -176,5 +176,37 @@ namespace RealEstateApp
             await Map.OpenAsync(location, options);
         }
         #endregion
+
+        private async void OpenBrowserSystem_Clicked(object sender, EventArgs e)
+        {
+            var options = new BrowserLaunchOptions
+            {
+                LaunchMode = BrowserLaunchMode.SystemPreferred,
+                TitleMode = BrowserTitleMode.Show,
+                PreferredToolbarColor = Color.Blue,
+                PreferredControlColor = Color.Red
+            };
+            await Browser.OpenAsync("Https://eucsyd.dk", options);
+        }
+
+        private async void OpenBrowserExternal_Clicked(object sender, EventArgs e)
+        {
+            var options = new BrowserLaunchOptions
+            {
+                LaunchMode = BrowserLaunchMode.External,
+                TitleMode = BrowserTitleMode.Show,
+                PreferredToolbarColor = Color.Blue,
+                PreferredControlColor = Color.Green
+            };
+            await Browser.OpenAsync("Https://eucsyd.dk", options);
+        }
+
+        private async void OpenFile_Clicked(object sender, EventArgs e)
+        {
+            await Launcher.OpenAsync(new OpenFileRequest
+            {
+                File = new ReadOnlyFile(Property.ContractFilePath)
+            });
+        }
     }
 }

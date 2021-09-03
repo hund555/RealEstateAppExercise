@@ -180,6 +180,29 @@
                     FontFamily="FA-solid"
                     Clicked="Directions_Clicked"/>
             </Grid>
+            
+            <Grid Grid.Row="12" ColumnDefinitions="*, *, *">
+                <Button 
+                    Text="{Static fa:IconFont.Link}" 
+                    Margin="0,0,0,20" 
+                    FontSize="14" 
+                    FontFamily="FA-solid"
+                    Clicked="OpenBrowserSystem_Clicked"/>
+                <Button
+                    Grid.Column="1"
+                    Text="{Static fa:IconFont.ExternalLinkAlt}"
+                    Margin="0,0,0,20" 
+                    FontSize="14" 
+                    FontFamily="FA-solid"
+                    Clicked="OpenBrowserExternal_Clicked"/>
+                <Button
+                    Grid.Column="2"
+                    Text="{Static fa:IconFont.FileSignature}"
+                    Margin="0,0,0,20" 
+                    FontSize="14" 
+                    FontFamily="FA-solid"
+                    Clicked="OpenFile_Clicked"/>
+            </Grid>
         </Grid>
     </ScrollView>
 </ContentPage>
