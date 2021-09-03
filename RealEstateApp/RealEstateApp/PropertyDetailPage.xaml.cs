@@ -177,6 +177,7 @@ namespace RealEstateApp
         }
         #endregion
 
+        #region 5.3
         private async void OpenBrowserSystem_Clicked(object sender, EventArgs e)
         {
             var options = new BrowserLaunchOptions
@@ -208,5 +209,6 @@ namespace RealEstateApp
                 File = new ReadOnlyFile(Property.ContractFilePath)
             });
         }
+        #endregion
     }
 }
