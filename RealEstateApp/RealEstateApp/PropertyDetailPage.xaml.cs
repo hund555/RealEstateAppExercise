@@ -1,4 +1,5 @@
-﻿using RealEstateApp.Models;
+﻿using Newtonsoft.Json;
+using RealEstateApp.Models;
 using RealEstateApp.Services;
 using System;
 using System.Collections.Generic;
@@ -208,6 +209,33 @@ namespace RealEstateApp
             {
                 File = new ReadOnlyFile(Property.ContractFilePath)
             });
+        }
+        #endregion
+
+        #region 5.4
+        private async void ShareText_Clicked(object sender, EventArgs e)
+        {
+            await Share.RequestAsync(new ShareTextRequest
+            {
+                Uri = "Https://eucsyd.dk",
+                Subject = Property.Address,
+                Text = $"{Property.Address}, {Property.Price}, {Property.Beds}",
+                Title = "Share Property"
+            });
+        }
+
+        private async void ShareFile_Clicked(object sender, EventArgs e)
+        {
+            await Share.RequestAsync(new ShareFileRequest
+            {
+                Title = "Share Property Contract",
+                File = new ShareFile(Property.ContractFilePath)
+            });
+        }
+
+        private async void Clipboard_Clicked(object sender, EventArgs e)
+        {
+            await Clipboard.SetTextAsync(JsonConvert.SerializeObject(Property));
         }
         #endregion
     }
