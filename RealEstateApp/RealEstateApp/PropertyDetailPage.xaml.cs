@@ -39,9 +39,25 @@ namespace RealEstateApp
         }
 
         #region 3.6
+        public float VolumeInput 
+        { 
+            get => Preferences.Get(nameof(VolumeInput), 0.75f, "TextToSpeech");
+            set
+            {
+                Preferences.Set(nameof(VolumeInput), value, "TextToSpeech");
+            }
+        }
+        public float PitchInput
+        {
+            get => Preferences.Get(nameof(PitchInput), 1.5f, "TextToSpeech");
+            set
+            {
+                Preferences.Set(nameof(PitchInput), value, "TextToSpeech");
+            }
+        }
         public bool IsSpeaking { get; set; } = false;
-        public float? VolumeInput { get; set; } = 0.75f;
-        public float? PitchInput { get; set; } = 1.5f;
+        //public float? VolumeInput { get; set; } = Preferences.Get("volume", 0.75f);
+        //public float? PitchInput { get; set; } = Preferences.Get("pitch", 1.5f);
         public async Task SpeakNowDefaultSettings()
         {
             var settings = new SpeechOptions()
